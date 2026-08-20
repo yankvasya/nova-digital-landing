@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nova Digital — диджитал-агентство полного цикла: разработка сайтов, брендинг, продвижение и аналитика." />
+  <title>Nova Digital — диджитал-агентство</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --dark: #0f172a; --dark-2: #1e293b; --dark-3: #334155; --white: #ffffff;
+      --accent: #14b8a6; --accent-dark: #0d9488; --accent-light: #99f6e4;
+      --muted: #94a3b8; --bg-soft: #f8fafc; --radius: 16px;
+      --shadow: 0 20px 40px -20px rgba(15, 23, 42, 0.25);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', Arial, sans-serif; color: var(--dark); background: var(--white); line-height: 1.6; overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 96px 0; }
+    .section-tag { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .section-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .section-subtitle { font-size: 18px; color: var(--muted); max-width: 560px; }
+    .section-head { text-align: center; margin-bottom: 56px; }
+    .section-head .section-subtitle { margin: 0 auto; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 28px; border-radius: 999px; font-size: 16px; font-weight: 600; font-family: inherit; border: none; cursor: pointer; transition: var(--transition); white-space: nowrap; }
+    .btn-primary { background: var(--accent); color: var(--dark); }
+    .btn-primary:hover { background: var(--accent-dark); color: var(--white); transform: translateY(-3px); box-shadow: 0 16px 30px -12px rgba(20, 184, 166, 0.6); }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255, 255, 255, 0.3); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+    .btn-dark { background: var(--dark); color: var(--white); }
+    .btn-dark:hover { background: var(--accent); color: var(--dark); transform: translateY(-3px); }
+
+    .header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.06); transition: var(--transition); }
+    .header.scrolled { background: rgba(15, 23, 42, 0.97); box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
+    .logo-mark { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), #0ea5e9); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: var(--dark); }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { color: var(--muted); font-size: 15px; font-weight: 500; transition: var(--transition); position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--accent); transition: var(--transition); }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { padding: 10px 22px; font-size: 14px; }
+    .burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1100; }
+    .burger span { width: 26px; height: 2.5px; background: var(--white); border-radius: 2px; transition: var(--transition); }
+    .burger.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .burger.active span:nth-child(2) { opacity: 0; }
+    .burger.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+    .mobile-menu { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: var(--dark); padding: 100px 32px 32px; display: flex; flex-direction: column; gap: 24px; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1050; box-shadow: -20px 0 40px rgba(0, 0, 0, 0.3); }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { color: var(--white); font-size: 18px; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); transition: var(--transition); }
+    .mobile-menu a:hover { color: var(--accent); padding-left: 8px; }
+    .mobile-menu .btn { margin-top: 16px; }
+    .overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); opacity: 0; visibility: hidden; transition: var(--transition); z-index: 1040; }
+    .overlay.show { opacity: 1; visibility: visible; }
+
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; background: var(--dark); color: var(--white); overflow: hidden; padding: 140px 0 80px; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5; }
+    .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(20, 184, 166, 0.6), transparent 70%); top: -150px; right: -100px; animation: float 12s ease-in-out infinite; }
+    .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(14, 165, 233, 0.5), transparent 70%); bottom: -120px; left: -80px; animation: float 16s ease-in-out infinite reverse; }
+    .orb-3 { width: 250px; height: 250px; background: radial-gradient(circle, rgba(124, 58, 237, 0.4), transparent 70%); top: 40%; left: 45%; animation: float 20s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(30px, -30px) scale(1.05); } 66% { transform: translate(-20px, 20px) scale(0.95); } }
+    .hero-bg::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%); }
+    .hero-content { position: relative; z-index: 1; max-width: 720px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 999px; background: rgba(20, 184, 166, 0.12); border: 1px solid rgba(20, 184, 166, 0.3); color: var(--accent-light); font-size: 14px; font-weight: 600; margin-bottom: 28px; }
+    .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.6); } 50% { box-shadow: 0 0 0 8px rgba(20, 184, 166, 0); } }
+    .hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px; }
+    .hero h1 .gradient-text { background: linear-gradient(135deg, var(--accent), #0ea5e9); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: clamp(16px, 2vw, 20px); color: var(--muted); max-width: 560px; margin-bottom: 40px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 48px; margin-top: 64px; flex-wrap: wrap; }
+    .stat { display: flex; flex-direction: column; }
+    .stat-number { font-size: 36px; font-weight: 800; color: var(--white); line-height: 1; }
+    .stat-number .accent { color: var(--accent); }
+    .stat-label { font-size: 14px; color: var(--muted); margin-top: 8px; }
+
+    .advantages { background: var(--bg-soft); }
+    .adv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .adv-card { background: var(--white); border-radius: var(--radius); padding: 32px 28px; border: 1px solid #e2e8f0; transition: var(--transition); position: relative; overflow: hidden; }
+    .adv-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--accent), #0ea5e9); transform: scaleX(0); transform-origin: left; transition: var(--transition); }
+    .adv-card:hover { transform: translateY(-8px); box-shadow: var(--shadow); border-color: transparent; }
+    .adv-card:hover::before { transform: scaleX(1); }
+    .adv-icon { width: 56px; height: 56px; border-radius: 14px; background: rgba(20, 184, 166, 0.12); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: var(--transition); }
+    .adv-card:hover .adv-icon { background: var(--accent); transform: rotate(-6deg) scale(1.05); }
+    .adv-icon svg { width: 28px; height: 28px; stroke: var(--accent); transition: var(--transition); }
+    .adv-card:hover .adv-icon svg { stroke: var(--dark); }
+    .adv-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .adv-card p { font-size: 15px; color: var(--muted); }
+
+    .services { background: var(--white); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .service-card { background: var(--dark); color: var(--white); border-radius: var(--radius); padding: 36px 32px; position: relative; overflow: hidden; transition: var(--transition); border: 1px solid rgba(255, 255, 255, 0.06); }
+    .service-card::after { content: ''; position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(20, 184, 166, 0.25), transparent 70%); top: -80px; right: -80px; transition: var(--transition); }
+    .service-card:hover { transform: translateY(-8px); border-color: rgba(20, 184, 166, 0.4); box-shadow: 0 30px 50px -20px rgba(15, 23, 42, 0.5); }
+    .service-card:hover::after { transform: scale(1.6); }
+    .service-num { font-size: 14px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 24px; display: block; }
+    .service-icon { width: 52px; height: 52px; border-radius: 12px; background: rgba(20, 184, 166, 0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+    .service-icon svg { width: 26px; height: 26px; stroke: var(--accent); }
+    .service-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+    .service-card p { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
+    .service-link { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; font-size: 15px; transition: var(--transition); }
+    .service-link:hover { gap: 14px; }
+
+    .process { background: var(--bg-soft); }
+    .process-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; }
+    .process-item { display: flex; gap: 32px; padding: 32px 0; position: relative; }
+    .process-item:not(:last-child)::before { content: ''; position: absolute; left: 27px; top: 80px; bottom: -20px; width: 2px; background: linear-gradient(to bottom, var(--accent), rgba(20, 184, 166, 0.1)); }
+    .process-num { flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; background: var(--dark); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; border: 2px solid var(--accent); z-index: 1; transition: var(--transition); }
+    .process-item:hover .process-num { background: var(--accent); color: var(--dark); transform: scale(1.1); }
+    .process-body h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .process-body p { color: var(--muted); font-size: 15px; }
+
+    .portfolio { background: var(--white); }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .portfolio-item { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4 / 3; cursor: pointer; background: var(--dark); }
+    .portfolio-item .thumb { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+    .portfolio-item .thumb svg { width: 60px; height: 60px; stroke: rgba(255, 255, 255, 0.3); }
+    .portfolio-item .thumb::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(20, 184, 166, 0.15), rgba(14, 165, 233, 0.15)); }
+    .portfolio-item .thumb::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 30px 30px; }
+    .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.4)); display: flex; flex-direction: column; justify-content: flex-end; padding: 28px; opacity: 0; transform: translateY(20px); transition: var(--transition); }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; transform: translateY(0); }
+    .portfolio-item:hover .thumb { transform: scale(1.1); }
+    .portfolio-overlay .cat { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .portfolio-overlay h3 { color: var(--white); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .portfolio-overlay p { color: var(--muted); font-size: 14px; }
+
+    .testimonials { background: var(--dark); color: var(--white); overflow: hidden; }
+    .testimonials .section-subtitle { color: var(--muted); }
+    .slider { position: relative; max-width: 800px; margin: 0 auto; }
+    .slides { overflow: hidden; }
+    .slides-track { display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .slide { min-width: 100%; padding: 0 8px; }
+    .testimonial-card { background: var(--dark-2); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius); padding: 40px; text-align: center; }
+    .testimonial-card .quote-icon { width: 48px; height: 48px; margin: 0 auto 24px; color: var(--accent); }
+    .testimonial-card .quote-icon svg { width: 48px; height: 48px; fill: var(--accent); }
+    .testimonial-text { font-size: 20px; line-height: 1.6; color: #e2e8f0; margin-bottom: 32px; font-weight: 500; }
+    .testimonial-author { display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .testimonial-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #0ea5e9); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--dark); font-size: 18px; }
+    .testimonial-author .name { font-weight: 700; text-align: left; }
+    .testimonial-author .role { font-size: 14px; color: var(--muted); text-align: left; }
+    .slider-nav { display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 32px; }
+    .slider-btn { width: 48px; height: 48px; border-radius: 50%; background: var(--dark-2); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+    .slider-btn:hover { background: var(--accent); color: var(--dark); border-color: var(--accent); }
+    .slider-btn svg { width: 20px; height: 20px; stroke: currentColor; }
+    .slider-dots { display: flex; gap: 8px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); border: none; cursor: pointer; transition: var(--transition); }
+    .dot.active { background: var(--accent); transform: scale(1.3); }
+
+    .contact { background: var(--bg-soft); }
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+    .contact-info h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .contact-info > p { color: var(--muted); margin-bottom: 32px; }
+    .contact-item { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .contact-item .icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(20, 184, 166, 0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-item .icon svg { width: 20px; height: 20px; stroke: var(--accent); }
+    .contact-item .label { font-size: 13px; color: var(--muted); }
+    .contact-item .value { font-weight: 600; }
+    .form-card { background: var(--white); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow); border: 1px solid #e2e8f0; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .form-group input, .form-group textarea { width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-family: inherit; font-size: 15px; transition: var(--transition); background: var(--bg-soft); color: var(--dark); }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); background: var(--white); box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.12); }
+    .form-group input.error, .form-group textarea.error { border-color: #ef4444; background: #fef2f2; }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .error-msg { display: none; font-size: 13px; color: #ef4444; margin-top: 6px; }
+    .error-msg.show { display: block; }
+    .form-success { display: none; text-align: center; padding: 24px 0; }
+    .form-success.show { display: block; }
+    .form-success .check { width: 72px; height: 72px; border-radius: 50%; background: rgba(20, 184, 166, 0.12); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .form-success .check svg { width: 36px; height: 36px; stroke: var(--accent); }
+    .form-success h3 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    .form-success p { color: var(--muted); }
+    .form-body.hidden { display: none; }
+
+    .footer { background: var(--dark); color: var(--white); padding: 64px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand p { color: var(--muted); font-size: 15px; margin-top: 16px; max-width: 300px; }
+    .footer h4 { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+    .footer-links li { margin-bottom: 12px; }
+    .footer-links a { color: var(--muted); font-size: 15px; transition: var(--transition); }
+    .footer-links a:hover { color: var(--accent); padding-left: 4px; }
+    .socials { display: flex; gap: 12px; }
+    .social-link { width: 40px; height: 40px; border-radius: 10px; background: var(--dark-2); display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+    .social-link:hover { background: var(--accent); transform: translateY(-4px); }
+    .social-link svg { width: 18px; height: 18px; fill: var(--white); transition: var(--transition); }
+    .social-link:hover svg { fill: var(--dark); }
+    .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 14px; }
+
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    @media (max-width: 1024px) {
+      .adv-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      section { padding: 72px 0; }
+      .nav-links, .nav-cta { display: none; }
+      .burger { display: flex; }
+      .hero { padding: 120px 0 60px; }
+      .hero-stats { gap: 32px; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .form-card { padding: 28px; }
+      .form-row { grid-template-columns: 1fr; }
+      .testimonial-card { padding: 28px 20px; }
+      .testimonial-text { font-size: 17px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .adv-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+      .stat-number { font-size: 28px; }
+      .hero-actions .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header" id="header">
+    <div class="container nav">
+      <a href="#hero" class="logo">
+        <span class="logo-mark">N</span>
+        Nova<span>Digital</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#advantages">Преимущества</a>
+        <a href="#services">Услуги</a>
+        <a href="#process">Процесс</a>
+        <a href="#portfolio">Портфолио</a>
+        <a href="#testimonials">Отзывы</a>
+      </nav>
+      <a href="#contact" class="btn btn-primary nav-cta">Обсудить проект</a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#advantages">Преимущества</a>
+    <a href="#services">Услуги</a>
+    <a href="#process">Процесс</a>
+    <a href="#portfolio">Портфолио</a>
+    <a href="#testimonials">Отзывы</a>
+    <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="dot"></span> Диджитал-агентство полного цикла</div>
+        <h1>Создаём цифровые продукты, которые <span class="gradient-text">работают на результат</span></h1>
+        <p>Разработка сайтов, брендинг, продвижение и аналитика. Помогаем бизнесу расти в цифровой среде с 2016 года.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+          <a href="#portfolio" class="btn btn-outline">Смотреть работы</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-number"><span class="accent">120</span>+</div>
+            <div class="stat-label">проектов реализовано</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number"><span class="accent">9</span> лет</div>
+            <div class="stat-label">на рынке</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number"><span class="accent">98</span>%</div>
+            <div class="stat-label">клиентов возвращаются</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ADVANTAGES ============ -->
+  <section class="advantages" id="advantages">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">Почему мы</span>
+        <h2 class="section-title">Преимущества работы с нами</h2>
+        <p class="section-subtitle">Комплексный подход и прозрачные процессы — залог успешных проектов.</p>
+      </div>
+      <div class="adv-grid">
+        <div class="adv-card reveal reveal-delay-1">
+          <div class="adv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5L8 13.8 2 9.2h7.6z"/></svg>
+          </div>
+          <h3>Комплексный подход</h3>
+          <p>Стратегия, дизайн, разработка и продвижение — всё в одном месте.</p>
+        </div>
+        <div class="adv-card reveal reveal-delay-2">
+          <div class="adv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>Быстрый запуск</h3>
+          <p>Запускаем проекты в среднем за 4–6 недель без потери качества.</p>
+        </div>
+        <div class="adv-card reveal reveal-delay-3">
+          <div class="adv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3>Прозрачность</h3>
+          <p>Регулярные отчёты и открытая коммуникация на каждом этапе.</p>
+        </div>
+        <div class="adv-card reveal reveal-delay-4">
+          <div class="adv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Команда экспертов</h3>
+          <p>Дизайнеры, разработчики и маркетологи с опытом 5+ лет.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">Услуги</span>
+        <h2 class="section-title">Что мы делаем</h2>
+        <p class="section-subtitle">Полный спектр диджитал-услуг для роста вашего бизнеса.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1">
+          <span class="service-num">01</span>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          </div>
+          <h3>Веб-разработка</h3>
+          <p>Корпоративные сайты, интернет-магазины и веб-приложения на современных технологиях.</p>
+          <a href="#contact" class="service-link">Подробнее →</a>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <span class="service-num">02</span>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+          </div>
+          <h3>Брендинг и дизайн</h3>
+          <p>Логотипы, фирменный стиль, UX/UI-дизайн, который выделяет вас среди конкурентов.</p>
+          <a href="#contact" class="service-link">Подробнее →</a>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <span class="service-num">03</span>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-7"/></svg>
+          </div>
+          <h3>Продвижение и SEO</h3>
+          <p>Контекстная реклама, SEO-оптимизация и SMM для стабильного потока клиентов.</p>
+          <a href="#contact" class="service-link">Подробнее →</a>
+        </div>
+        <div class="service-card reveal reveal-delay-4">
+          <span class="service-num">04</span>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3>Аналитика и CRO</h3>
+          <p>Веб-аналитика, A/B-тесты и оптимизация конверсии на основе данных.</p>
+          <a href="#contact" class="service-link">Подробнее →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">Процесс</span>
+        <h2 class="section-title">Как мы работаем</h2>
+        <p class="section-subtitle">Прозрачный процесс из четырёх шагов — от идеи до запуска.</p>
+      </div>
+      <div class="process-list">
+        <div class="process-item reveal">
+          <div class="process-num">1</div>
+          <div class="process-body">
+            <h3>Брифинг и исследование</h3>
+            <p>Погружаемся в ваш бизнес, изучаем аудиторию и конкурентов, определяем цели проекта.</p>
+          </div>
+        </div>
+        <div class="process-item reveal">
+          <div class="process-num">2</div>
+          <div class="process-body">
+            <h3>Стратегия и прототип</h3>
+            <p>Разрабатываем концепцию, структуру и интерактивный прототип будущего продукта.</p>
+          </div>
+        </div>
+        <div class="process-item reveal">
+          <div class="process-num">3</div>
+          <div class="process-body">
+            <h3>Дизайн и разработка</h3>
+            <p>Создаём современный дизайн и реализуем его на надёжных технологиях.</p>
+          </div>
+        </div>
+        <div class="process-item reveal">
+          <div class="process-num">4</div>
+          <div class="process-body">
+            <h3>Запуск и поддержка</h3>
+            <p>Тестируем, запускаем и сопровождаем проект, анализируя результаты.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PORTFOLIO ============ -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">Портфолио</span>
+        <h2 class="section-title">Наши проекты</h2>
+        <p class="section-subtitle">Избранные работы, которыми мы гордимся.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item reveal reveal-delay-1">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          </div>
+          <div class="portfolio-overlay">
+            <span class="cat">E-commerce</span>
+            <h3>Интернет-магазин «Lumen»</h3>
+            <p>Разработка и запуск магазина светильников</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal reveal-delay-2">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+          </div>
+          <div class="portfolio-overlay">
+            <span class="cat">Брендинг</span>
+            <h3>Фирменный стиль «Aurora»</h3>
+            <p>Логотип и айдентика для финтех-стартапа</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal reveal-delay-3">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-7"/></svg>
+          </div>
+          <div class="portfolio-overlay">
+            <span class="cat">SaaS</span>
+            <h3>Платформа «Flowly»</h3>
+            <p>Веб-приложение для управления задачами</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal reveal-delay-1">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="portfolio-overlay">
+            <span class="cat">Маркетинг</span>
+            <h3>SEO-продвижение «Vetro»</h3>
+            <p>Рост органического трафика в 3 раза за 6 месяцев</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal reveal-delay-2">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div class="portfolio-overlay">
+            <span class="cat">Корпоративный</span>
+            <h3>Сайт компании «Orbit»</h3>
+            <p>Корпоративный портал для логистической компании</p>
+          </div>
+        </div>
+        <div class="portfolio-item reveal reveal-delay-3">
+          <div class="thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="portfolio-overlay">
+            <span class="cat">Мобильное</span>
+            <h3>Приложение «Pulse»</h3>
+            <p>Дизайн и разработка мобильного приложения</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag">Отзывы</span>
+        <h2 class="section-title">Что говорят клиенты</h2>
+        <p class="section-subtitle">Нам доверяют компании из разных отраслей.</p>
+      </div>
+      <div class="slider reveal">
+        <div class="slides">
+          <div class="slides-track" id="slidesTrack">
+            <div class="slide">
+              <div class="testimonial-card">
+                <div class="quote-icon">
+                  <svg viewBox="0 0 24 24"><path d="M10 7L8 11h3v6H5v-6l2-4h3zm9 0l-2 4h3v6h-6v-6l2-4h3z"/></svg>
+                </div>
+                <p class="testimonial-text">«Nova Digital полностью преобразили наш сайт. Конверсия выросла на 40% уже в первый месяц после запуска. Команда — настоящие профессионалы своего дела.»</p>
+                <div class="testimonial-author">
+                  <div class="testimonial-avatar">АК</div>
+                  <div>
+                    <div class="name">Анна Ковалёва</div>
+                    <div class="role">CEO, интернет-магазин «Lumen»</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="testimonial-card">
+                <div class="quote-icon">
+                  <svg viewBox="0 0 24 24"><path d="M10 7L8 11h3v6H5v-6l2-4h3zm9 0l-2 4h3v6h-6v-6l2-4h3z"/></svg>
+                </div>
+                <p class="testimonial-text">«Работали над брендингом и сайтом одновременно. Результат превзошёл ожидания — стильно, современно и очень удобно для пользователей. Рекомендую!»</p>
+                <div class="testimonial-author">
+                  <div class="testimonial-avatar">ДС</div>
+                  <div>
+                    <div class="name">Дмитрий Соколов</div>
+                    <div class="role">Основатель, финтех-стартап «Aurora»</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="testimonial-card">
+                <div class="quote-icon">
+                  <svg viewBox="0 0 24 24"><path d="M10 7L8 11h3v6H5v-6l2-4h3zm9 0l-2 4h3v6h-6v-6l2-4h3z"/></svg>
+                </div>
+                <p class="testimonial-text">«Благодаря SEO-продвижению от Nova Digital органический трафик вырос в три раза за полгода. Отличная коммуникация и прозрачная отчётность на каждом этапе.»</p>
+                <div class="testimonial-author">
+                  <div class="testimonial-avatar">ЕП</div>
+                  <div>
+                    <div class="name">Елена Петрова</div>
+                    <div class="role">Маркетинг-директор, «Vetro»</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slider-nav">
+          <button class="slider-btn" id="prevBtn" aria-label="Предыдущий">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="slider-dots" id="sliderDots"></div>
+          <button class="slider-btn" id="nextBtn" aria-label="Следующий">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT / FORM ============ -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-wrap">
+        <div class="contact-info reveal">
+          <span class="section-tag">Контакты</span>
+          <h2>Обсудим ваш проект?</h2>
+          <p>Оставьте заявку — мы свяжемся с вами в течение рабочего дня и предложим решение под ваши задачи.</p>
+          <div class="contact-item">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="label">Телефон</div>
+              <div class="value">+7 (900) 123-45-67</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+            </div>
+            <div>
+              <div class="label">Email</div>
+              <div class="value">hello@novadigital.ru</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="label">Офис</div>
+              <div class="value">Москва, ул. Цифровая, 10</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-card reveal reveal-delay-2">
+          <form id="contactForm" class="form-body" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Имя</label>
+                <input type="text" id="name" name="name" placeholder="Ваше имя" />
+                <div class="error-msg" id="nameError">Пожалуйста, укажите имя</div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" />
+                <div class="error-msg" id="emailError">Введите корректный email</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон</label>
+              <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" />
+              <div class="error-msg" id="phoneError">Введите корректный телефон</div>
+            </div>
+            <div class="form-group">
+              <label for="message">Сообщение</label>
+              <textarea id="message" name="message" placeholder="Расскажите о вашем проекте..."></textarea>
+              <div class="error-msg" id="messageError">Опишите ваш проект (минимум 10 символов)</div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Отправить заявку</button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="check">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h3>Заявка отправлена!</h3>
+            <p>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="logo">
+            <span class="logo-mark">N</span>
+            Nova<span>Digital</span>
+          </a>
+          <p>Диджитал-агентство полного цикла. Создаём цифровые продукты, которые работают на результат.</p>
+        </div>
+        <div>
+          <h4>Навигация</h4>
+          <ul class="footer-links">
+            <li><a href="#advantages">Преимущества</a></li>
+            <li><a href="#services">Услуги</a></li>
+            <li><a href="#process">Процесс</a></li>
+            <li><a href="#portfolio">Портфолио</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Услуги</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Веб-разработка</a></li>
+            <li><a href="#services">Брендинг</a></li>
+            <li><a href="#services">Продвижение</a></li>
+            <li><a href="#services">Аналитика</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Контакты</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:hello@novadigital.ru">hello@novadigital.ru</a></li>
+            <li><a href="tel:+79001234567">+7 (900) 123-45-67</a></li>
+            <li><a href="#contact">Москва, ул. Цифровая, 10</a></li>
+          </ul>
+          <div class="socials" style="margin-top:16px;">
+            <a href="#" class="social-link" aria-label="Telegram">
+              <svg viewBox="0 0 24 24"><path d="M21.9 4.6l-3.2 15.1c-.2 1-.8 1.2-1.7.8l-4.6-3.4-2.2 2.1c-.2.2-.5.5-.9.5l.3-4.7 8.5-7.7c.4-.3-.1-.5-.6-.2L7.1 13.2l-4.5-1.4c-1-.3-1-1 .2-1.5l17.5-6.7c.8-.3 1.5.2 1.6 1z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="VK">
+              <svg viewBox="0 0 24 24"><path d="M13.1 18.5c-6.4 0-10-4.4-10.2-11.7h3.2c.1 5.4 2.5 7.7 4.4 8.2V6.8h3.1v4.7c1.9-.2 3.9-2.3 4.6-4.7h3.1c-.5 2.9-2.7 5-4.2 5.9 1.5.7 3.9 2.6 4.8 5.8h-3.4c-.7-2.2-2.5-3.9-4.9-4.1v4.1h-.5z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Behance">
+              <svg viewBox="0 0 24 24"><path d="M8.8 11.2c.9-.4 1.5-1.2 1.5-2.4 0-2.1-1.5-3-3.6-3H1v12.4h5.9c2.2 0 4.1-1.1 4.1-3.6 0-1.5-.7-2.9-2.2-3.4zM3.5 7.8h2.7c1 0 1.7.4 1.7 1.5 0 1-.6 1.5-1.6 1.5H3.5V7.8zm3 8.4H3.5v-3.4h3c1.2 0 1.9.5 1.9 1.7 0 1.2-.8 1.7-1.9 1.7zM15.6 16.9c1.1 1 2.6 1.5 4.2 1.5 2.2 0 4-.9 4.8-3h-2.7c-.4.8-1.2 1.2-2.1 1.2-1.4 0-2.4-.8-2.5-2.4h7.5c.1-2.9-1.6-5.2-4.8-5.2-2.9 0-5 2.1-5 4.9 0 2.8 1.7 4.2 3.6 5zm2.1-6.7c1.2 0 2 .7 2.1 2h-4.3c.1-1.3.9-2 2.2-2zM14.5 5.5h6v1.4h-6z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Nova Digital. Все права защищены.</span>
+        <span>Сделано с любовью к цифровым продуктам</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ============ MOBILE MENU ============
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('overlay');
+
+    function toggleMenu(open) {
+      burger.classList.toggle('active', open);
+      mobileMenu.classList.toggle('open', open);
+      overlay.classList.toggle('show', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    burger.addEventListener('click', () => {
+      toggleMenu(!mobileMenu.classList.contains('open'));
+    });
+
+    overlay.addEventListener('click', () => toggleMenu(false));
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => toggleMenu(false));
+    });
+
+    // ============ HEADER SCROLL ============
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ============ SCROLL REVEAL (IntersectionObserver) ============
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ============ TESTIMONIALS SLIDER ============
+    const track = document.getElementById('slidesTrack');
+    const slides = track.children;
+    const dotsContainer = document.getElementById('sliderDots');
+    let currentSlide = 0;
+
+    // Create dots
+    for (let i = 0; i < slides.length; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Слайд ' + (i + 1));
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    const dots = dotsContainer.children;
+
+    function goToSlide(index) {
+      currentSlide = (index + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + currentSlide * 100 + '%)';
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.toggle('active', i === currentSlide);
+      }
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentSlide + 1));
+    document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentSlide - 1));
+
+    // Auto-play
+    let autoPlay = setInterval(() => goToSlide(currentSlide + 1), 6000);
+    const slider = document.querySelector('.slider');
+    slider.addEventListener('mouseenter', () => clearInterval(autoPlay));
+    slider.addEventListener('mouseleave', () => {
+      autoPlay = setInterval(() => goToSlide(currentSlide + 1), 6000);
+    });
+
+    // ============ FORM VALIDATION ============
+    const form = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+
+    function setError(input, errorEl, show) {
+      input.classList.toggle('error', show);
+      errorEl.classList.toggle('show', show);
+    }
+
+    function validateField(input, errorEl, test) {
+      const valid = test(input.value.trim());
+      setError(input, errorEl, !valid);
+      return valid;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      const phone = document.getElementById('phone');
+      const message = document.getElementById('message');
+
+      const nameOk = validateField(name, document.getElementById('nameError'), v => v.length >= 2);
+      const emailOk = validateField(email, document.getElementById('emailError'), v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      const phoneOk = validateField(phone, document.getElementById('phoneError'), v => v.replace(/\D/g, '').length >= 10);
+      const messageOk = validateField(message, document.getElementById('messageError'), v => v.length >= 10);
+
+      if (nameOk && emailOk && phoneOk && messageOk) {
+        form.classList.add('hidden');
+        formSuccess.classList.add('show');
+      }
+    });
+
+    // Clear error on input
+    form.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('input', () => {
+        input.classList.remove('error');
+        const errorEl = input.parentElement.querySelector('.error-msg');
+        if (errorEl) errorEl.classList.remove('show');
+      });
+    });
+  </script>
+</body>
+</html>
